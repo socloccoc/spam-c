@@ -19,7 +19,8 @@ class CreateCrontabSettingsTable extends Migration
             $table->integer('time_once');
             $table->integer('time_request');
             $table->integer('card_number');
-            $table->integer('status')->comment('1: ON, 2:OFF');
+            $table->integer('status')->comment('1: ON, 0: OFF');
+            $table->string('email', 100);
             $table->timestamps();
         });
     }

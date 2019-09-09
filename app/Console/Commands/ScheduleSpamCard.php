@@ -3,8 +3,12 @@
 namespace App\Console\Commands;
 
 use App\CrontabSetting;
+use App\Mail\NotifyEmail;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Mail;
+
+//use Notify
 
 class ScheduleSpamCard extends Command
 {
@@ -43,13 +47,27 @@ class ScheduleSpamCard extends Command
         $setting = CrontabSetting::first();
         $cardType = config('constants.card_type_id');
         $sleep = $this->sleep($setting['time_request']);
-        for ($i = 0; $i < $setting['card_number']; $i++) {
-            if ($i != 0) {
-                sleep($sleep);
+        try {
+            for ($i = 0; $i < $setting['card_number']; $i++) {
+                if ($i != 0) {
+                    sleep($sleep);
+                }
+                $cardTypeId = $cardType[array_rand($cardType)];
+                $card = $this->createCard($cardTypeId);
+                $spamCard = $this->spamCard($setting['cookie'], $cardTypeId, $card[0], $card[1], $card[2]);
+                if ($spamCard == 'Chưa đăng nhập' || strpos($spamCard, 'cURL Error') !== false) {
+                    if ($spamCard == 'Chưa đăng nhập') {
+                        $this->pushNotification($setting['email'], $spamCard . ' ( section expired )');
+                    } else {
+                        $this->pushNotification($setting['email'], $spamCard);
+                    }
+                    CrontabSetting::where('id', $setting['id'])->limit(1)->update(['status' => 0]);
+                    break;
+                }
             }
-            $cardTypeId = $cardType[array_rand($cardType)];
-            $card = $this->createCard($cardTypeId);
-            $this->spamCard($setting['cookie'], $cardTypeId, $card[0], $card[1], $card[2]);
+        } catch (\Exception $e) {
+            $this->pushNotification($setting['email'], $e->getMessage());
+            $this->info(Carbon::now() . "\n");
         }
         $this->info(Carbon::now() . "\n");
     }
@@ -139,9 +157,19 @@ class ScheduleSpamCard extends Command
 
         if ($err) {
             $this->info("cURL Error #:" . $err);
+            return "cURL Error #:" . $err;
         } else {
             $res = json_decode($response);
             $this->info($res->msg);
+            return $res->msg;
         }
+    }
+
+    public function pushNotification($email, $msg)
+    {
+        $obj = new \stdClass();
+        $obj->content = $msg;
+        $obj->receiver = $email;
+        Mail::to($email)->send(new NotifyEmail($obj));
     }
 }

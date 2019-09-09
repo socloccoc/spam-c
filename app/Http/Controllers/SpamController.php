@@ -35,6 +35,7 @@ class SpamController extends Controller
             'time_once'    => 'required',
             'card_number'  => 'required',
             'time_request' => 'required',
+            'email' => 'required|email|max:100',
         ], []);
         $data = $request->except(['_method', '_token']);
         $data['status'] = isset($request->status) ? 1 : 0;

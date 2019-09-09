@@ -18,7 +18,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="time_once">Số giờ chạy một lần</label><br>
-                                <label for="time_once" style="color: red">vd: chọn 1H thì cứ một giờ job sẽ chạy 1
+                                <label for="time_once" style="color: red">* chọn 1h thì cứ một giờ job sẽ chạy 1
                                     lần</label>
                                 <select id="time_once" name="time_once" class="form-control">
                                     @forelse(config('constants.hours') as $index => $hour)
@@ -29,7 +29,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="card_number">Số thẻ muốn nạp</label><br/>
-                                <label for="card_number" style="color: red">* Hệ thống sẽ tự động tạo thẻ, bạn chỉ cần
+                                <label style="color: red">* Hệ thống sẽ tự động tạo thẻ, bạn chỉ cần
                                     nhập số lượng mình muốn</label>
                                 <input type="text" class="form-control" id="card_number" name="card_number"
                                        placeholder="1"
@@ -43,6 +43,12 @@
                                     @empty
                                     @endforelse
                                 </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label><br>
+                                <label style="color: red">* Nhận thông báo khi section hết hạn !</label>
+                                <input type="text" class="form-control" id="email" name="email" placeholder="Email"
+                                       value="{{ isset($setting['email']) ? $setting['email'] : '' }}">
                             </div>
                             <div class="form-group">
                                 <label class="switch">
