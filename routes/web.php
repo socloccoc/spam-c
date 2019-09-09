@@ -40,10 +40,3 @@ Route::match(['get', 'post'], 'password/reset/{token}', function(){
 Route::match(['get', 'post'], 'password/reset', function(){
     return redirect('/login');
 });
-
-Route::group(['prefix' => 'ajax'], function () {
-    Route::post('spamCard', [
-        'as' => 'spam.card',
-        'uses' => 'AjaxController@spamCard'
-    ]);
-});

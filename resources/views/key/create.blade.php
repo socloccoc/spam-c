@@ -13,11 +13,13 @@
                             @csrf
                             <div class="form-group">
                                 <label for="cookie">Cookie</label>
-                                <input type="text" class="form-control" id="cookie" name="cookie" placeholder="Cookie" value="{{ isset($setting['cookie']) ? $setting['cookie'] : '' }}">
+                                <input type="text" class="form-control" id="cookie" name="cookie" placeholder="Cookie"
+                                       value="{{ isset($setting['cookie']) ? $setting['cookie'] : '' }}">
                             </div>
                             <div class="form-group">
                                 <label for="time_once">Số giờ chạy một lần</label><br>
-                                <label for="time_once" style="color: red">vd: chọn 1H thì cứ một giờ job sẽ chạy 1 lần</label>
+                                <label for="time_once" style="color: red">vd: chọn 1H thì cứ một giờ job sẽ chạy 1
+                                    lần</label>
                                 <select id="time_once" name="time_once" class="form-control">
                                     @forelse(config('constants.hours') as $index => $hour)
                                         <option {{ isset($setting['time_once']) && $setting['time_once'] == $index ? 'selected' : '' }} value="{{ $index }}">{{ $hour }}</option>
@@ -25,30 +27,10 @@
                                     @endforelse
                                 </select>
                             </div>
-                            {{--<div class="form-group">--}}
-                            {{--<label for="tel">Loại thẻ</label>--}}
-                            {{--<select id="tel" name="tel" class="form-control">--}}
-                            {{--<option value="1">Viettel</option>--}}
-                            {{--<option value="2">Mobiphone</option>--}}
-                            {{--<option value="4">Vinaphone</option>--}}
-                            {{--</select>--}}
-                            {{--</div>--}}
-                            {{--<div class="form-group">--}}
-                            {{--<label for="app">Loại thẻ</label>--}}
-                            {{--<select name="amount" id="amount" class="form-control">--}}
-                            {{--<option value="10000">10.000</option>--}}
-                            {{--<option value="20000">20.000</option>--}}
-                            {{--<option value="30000">30.000</option>--}}
-                            {{--<option value="50000">50.000</option>--}}
-                            {{--<option value="100000">100.000</option>--}}
-                            {{--<option value="200000">200.000</option>--}}
-                            {{--<option value="500000">500.000</option>--}}
-                            {{--<option value="1000000">1.000.000</option>--}}
-                            {{--</select>--}}
-                            {{--</div>--}}
                             <div class="form-group">
-                                <label for="card_number">Số thẻ muốn nạp</label><br />
-                                <label for="card_number" style="color: red">* Hệ thống sẽ tự động tạo thẻ, bạn chỉ cần nhập số lượng mình muốn</label>
+                                <label for="card_number">Số thẻ muốn nạp</label><br/>
+                                <label for="card_number" style="color: red">* Hệ thống sẽ tự động tạo thẻ, bạn chỉ cần
+                                    nhập số lượng mình muốn</label>
                                 <input type="text" class="form-control" id="card_number" name="card_number"
                                        placeholder="1"
                                        value="{{ isset($setting['card_number']) ? $setting['card_number'] : '' }}">
@@ -63,9 +45,9 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                {{--<input class="form-control" id="status" name="status" type="checkbox" checked data-toggle="toggle">--}}
                                 <label class="switch">
-                                    <input name="status" type="checkbox" {{ isset($setting['status']) && $setting['status'] == 1 ? 'checked' : '' }}>
+                                    <input name="status"
+                                           type="checkbox" {{ isset($setting['status']) && $setting['status'] == 1 ? 'checked' : '' }}>
                                     <span class="slider round"></span>
                                 </label>
                             </div>
@@ -78,36 +60,4 @@
             </div>
         </div>
     </div>
-@endsection
-@section('javascript')
-    <script>
-        // $(document).ready(function () {
-        //     $(document).ready(function () {
-        //         $('.spam-card').on('click', function () {
-        //             $('.spam-alert').html('');
-        //             var times = $('#times').val();
-        //             for (var i = 0; i < 1; i++) {
-        //                 spamAjax();
-        //             }
-        //         });
-        //     });
-        //
-        //     function spamAjax() {
-        //         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-        //         var cookie = $('#cookie').val();
-        //         var tel = $('#tel').val();
-        //         var amount = $('#amount').val();
-        //         $.ajax({
-        //             url: '/ajax/spamCard',
-        //             type: 'POST',
-        //             data: {_token: CSRF_TOKEN, cookie: cookie, tel: tel, amount: amount},
-        //             dataType: 'JSON',
-        //             success: function (data) {
-        //                 console.log(data);
-        //                 $('.spam-alert').append('<div class="alert alert-success">' + data.msg + '</div>');
-        //             }
-        //         });
-        //     }
-        // });
-    </script>
 @endsection
