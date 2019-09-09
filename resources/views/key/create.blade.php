@@ -60,8 +60,15 @@
                                     @endforelse
                                 </select>
                             </div>
+                            <div class="form-group">
+                                {{--<input class="form-control" id="status" name="status" type="checkbox" checked data-toggle="toggle">--}}
+                                <label class="switch">
+                                    <input name="status" type="checkbox" {{ isset($setting['status']) && $setting['status'] == 1 ? 'checked' : '' }}>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
                             <div class="col-md-12 text-right" style="padding: 0px">
-                                <button type="submit" class="btn btn-primary spam-card">Spam card</button>
+                                <button type="submit" class="btn btn-primary spam-card">Save</button>
                             </div>
                         </form>
                     </div>
