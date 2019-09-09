@@ -37,6 +37,7 @@ class SpamController extends Controller
             'time_request' => 'required',
         ], []);
         $data = $request->except(['_method', '_token']);
+        $data['status'] = isset($request->status) ? 1 : 0;
         try {
             $setting = CrontabSetting::where('id', $id)->limit(1)->update($data);
             if ($setting) {

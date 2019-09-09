@@ -26,6 +26,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $setting = CrontabSetting::first();
+        if($setting['status'] == 0){
+            return;
+        }
         if ($setting['time_once'] == 0) {
             $schedule->command('spam:start')
                 ->everyThirtyMinutes()->appendOutputTo(storage_path('logs/spam_card.log'));

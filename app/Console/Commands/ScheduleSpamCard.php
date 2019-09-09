@@ -42,14 +42,16 @@ class ScheduleSpamCard extends Command
         $this->info(Carbon::now());
         $setting = CrontabSetting::first();
         $cardType = config('constants.card_type_id');
+        $sleep = $this->sleep($setting['time_request']);
         for ($i = 0; $i < $setting['card_number']; $i++) {
+            if ($i != 0) {
+                sleep($sleep);
+            }
             $cardTypeId = $cardType[array_rand($cardType)];
             $card = $this->createCard($cardTypeId);
             $this->spamCard($setting['cookie'], $cardTypeId, $card[0], $card[1], $card[2]);
-            $sleep = $this->sleep($setting['time_request']);
-            sleep($sleep);
         }
-        $this->info(Carbon::now()."\n");
+        $this->info(Carbon::now() . "\n");
     }
 
     public function sleep($timeRequest)
